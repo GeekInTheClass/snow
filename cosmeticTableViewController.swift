@@ -23,7 +23,7 @@ class cosmeticTableViewController : UITableViewController{
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
         
         let team = self.modelCos.arrayList[indexPath.row]
         
@@ -33,6 +33,13 @@ class cosmeticTableViewController : UITableViewController{
         return cell
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vcDetail = segue.destination as! DetailViewController
+        
+        let indexPath = self.tableView.indexPath(for: sender as! UITableViewCell)
+        
+        vcDetail.selectedTeam = self.modelCos.arrayList[(indexPath?.row)!]
+    }
 }
 
 
